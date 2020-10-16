@@ -1,0 +1,38 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="AvaloniaHugeTree.MainWindow"
+        xmlns:local="clr-namespace:AvaloniaHugeTree"
+        Title="AvaloniaHugeTree" Padding="5">
+    <Window.Resources>
+        <local:LevelPaddingConverter x:Key="PaddingConverter"/>
+    </Window.Resources>
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+            <TextBlock>Visible items: </TextBlock>
+            <TextBlock Text="{Binding TreeRoot.VisibleChildren.Count}"/>
+            <TextBlock Margin="5 0 0 0">Total items: </TextBlock>
+            <TextBlock Text="{Binding TotalItems}"/>
+        </StackPanel>
+        <Border BorderThickness="1" BorderBrush="Black">
+            <ScrollViewer
+                          HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Auto">
+                <ItemsRepeater Items="{Binding TreeRoot.VisibleChildren}">
+                    <ItemsRepeater.ItemTemplate>
+                        <DataTemplate>
+                            <Border Padding="{Binding Level, Converter={StaticResource PaddingConverter}}">
+                                <StackPanel Orientation="Horizontal">
+                                    <CheckBox IsChecked="{Binding IsExpanded}"/>
+                                    <TextBlock Focusable="True" Text="{Binding Name}" Margin="5 0 0 0"/>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsRepeater.ItemTemplate>
+                </ItemsRepeater>
+            </ScrollViewer>
+        </Border>
+    </DockPanel>
+</Window>
